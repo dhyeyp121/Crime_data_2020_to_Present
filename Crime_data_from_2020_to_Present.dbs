@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Crime_data_from_2020_to_Present" id="LogicalDesign-151a" database="LogicalDesign" >
+	<schema name="INSTANCE" catalogname="Crime_data_from_2020_to_Present" >
+		<table name="Dim_Crime" prior="Dim_Cirme" >
+			<column name="CrimeID" type="INT" jt="4" mandatory="y" />
+			<column name="Time" prior="CrimeTime" type="DATE" jt="91" />
+			<column name="Month" type="DATE" jt="91" />
+			<column name="Day" type="DATE" jt="91" />
+			<column name="Date" type="DATE" jt="91" />
+			<column name="CrimeCode" type="DATE" jt="91" />
+			<column name="CrimeType" type="DATE" jt="91" />
+			<column name="Crime_Vehicle" type="VARCHAR" jt="12" />
+			<column name="WeaponCode" type="VARCHAR" jt="12" />
+			<index name="pk_Cirme" unique="PRIMARY_KEY" >
+				<column name="CrimeID" />
+			</index>
+			<index name="unq_WeaponCode" unique="UNIQUE_INDEX" >
+				<column name="WeaponCode" />
+			</index>
+			<fk name="fk_Dim_Crime_Dim_Victim" virtual="y" to_schema="Crime_data_from_2020_to_Present.INSTANCE" to_table="Dim_Victim" type="ManyToMany" mandatory="y" cardinality="ZeroMore" range_from="0" range_to="0" >
+				<fk_column name="CrimeID" pk="VictimAge" />
+			</fk>
+			<fk name="fk_Dim_Crime_Dim_Location" virtual="y" to_schema="Crime_data_from_2020_to_Present.INSTANCE" to_table="Dim_Location" type="Identifying" mandatory="y" cardinality="OneMore" range_from="0" range_to="0" >
+				<fk_column name="CrimeID" pk="Location_ID" />
+			</fk>
+			<fk name="fk_Dim_Crime_Dim_Crime_Report" virtual="y" to_schema="Crime_data_from_2020_to_Present.INSTANCE" to_table="Dim_Crime_Report" type="Identifying" mandatory="y" cardinality="ZeroMore" range_from="0" range_to="0" >
+				<fk_column name="CrimeID" pk="CrimeID" />
+			</fk>
+		</table>
+		<table name="Dim_Crime_Report" prior="Entity" >
+			<column name="Date_Occured" prior="DateOccured" type="DATE" jt="91" mandatory="y" />
+			<column name="Date_Reported" type="DATE" jt="91" />
+			<column name="Police_Station" type="DATE" jt="91" />
+			<column name="CrimeID" type="INT" jt="4" />
+			<index name="pk" unique="PRIMARY_KEY" >
+				<column name="Date_Occured" />
+			</index>
+			<index name="unq_CrimeID" unique="UNIQUE_INDEX" >
+				<column name="CrimeID" />
+			</index>
+		</table>
+		<table name="Dim_Location" prior="Entity" >
+			<column name="Location_ID" type="INT" jt="4" mandatory="y" />
+			<column name="Longitude" type="INT" jt="4" />
+			<column name="Latitude" type="INT" jt="4" />
+			<column name="AreaNames" type="VARCHAR" length="100" jt="12" />
+			<column name="ZipCode" prior="AreaCode" type="VARCHAR" jt="12" />
+			<index name="pk_Dim_Location" unique="PRIMARY_KEY" >
+				<column name="Location_ID" />
+			</index>
+		</table>
+		<table name="Dim_Victim" prior="VictimID" >
+			<column name="VictimID" type="INT" jt="4" mandatory="y" />
+			<column name="VictimAge" type="INT" jt="4" />
+			<column name="VictimDescent" type="VARCHAR" jt="12" >
+				<comment><![CDATA[Descent Code: A - Other Asian, B - Black, C - Chinese, D - Cambodian , F - Filipino,  G - Guamanian,  H - Hispanic/Latin/Mexican,  I - American Indian/Alaskan Native , J - Japanese,  K - Korean,  L - Laotian , O - Other, P - Pacific Islander,  S - Samoan, U - Hawaiian, V - Vietnamese, W - White, X - Unknown, Z - Asian Indian.]]></comment>
+			</column>
+			<column name="VictimSex" type="VARCHAR" jt="12" />
+			<index name="pk_VictimID" unique="PRIMARY_KEY" >
+				<column name="VictimID" />
+			</index>
+			<index name="unq_VictimAge" unique="UNIQUE_INDEX" >
+				<column name="VictimAge" />
+			</index>
+		</table>
+		<table name="Police" prior="Entity" />
+		<table name="Weapon" prior="Entity" >
+			<column name="WeaponType" type="VARCHAR" jt="12" />
+			<column name="Registered" type="VARCHAR" jt="12" />
+			<column name="WeaponCode" type="VARCHAR" jt="12" mandatory="y" />
+			<index name="pk_Weapon" unique="PRIMARY_KEY" >
+				<column name="WeaponCode" />
+			</index>
+			<fk name="fk_Weapon_Dim_Crime" virtual="y" to_schema="Crime_data_from_2020_to_Present.INSTANCE" to_table="Dim_Crime" type="Identifying" mandatory="y" cardinality="ZeroMore" range_from="0" range_to="0" >
+				<fk_column name="WeaponCode" pk="WeaponCode" />
+			</fk>
+		</table>
+	</schema>
+	<layout name="Default Layout" id="Layout-1b25" show_relation="columns" >
+		<entity schema="Crime_data_from_2020_to_Present.INSTANCE" name="Dim_Crime" color="C1D8EE" x="578" y="561" />
+		<entity schema="Crime_data_from_2020_to_Present.INSTANCE" name="Dim_Crime_Report" color="C1D8EE" x="935" y="629" />
+		<entity schema="Crime_data_from_2020_to_Present.INSTANCE" name="Dim_Location" color="C1D8EE" x="765" y="357" />
+		<entity schema="Crime_data_from_2020_to_Present.INSTANCE" name="Dim_Victim" color="C1D8EE" x="374" y="289" />
+		<entity schema="Crime_data_from_2020_to_Present.INSTANCE" name="Weapon" color="C1D8EE" x="272" y="714" />
+		<callout x="51" y="51" pointer="Round" >
+			<comment><![CDATA[This is a layout - a diagram with tools.
+- Create new entities by right-clicking the layout. 
+- Double-click entity headers to edit.
+- For a better understanding of the schema, create multiple layouts.
+- Deploy the model into the database by converting it first to the physical design.]]></comment>
+		</callout>
+	</layout>
+</project>
