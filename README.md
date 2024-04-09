@@ -5,3 +5,6 @@ This dataset reflects incidents of crime in the City of Los Angeles dating back 
 his data is transcribed from original crime reports that are typed on paper and therefore there may be some inaccuracies within the data. 
 Some location fields with missing data are noted as (0°, 0°).
  Address fields are only provided to the nearest hundred block in order to maintain privacy. 
+
+
+Data Dictionary provided by Data Source, explaining the columns 
