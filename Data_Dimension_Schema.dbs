@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="Crime_data_from_2020_to_Present" id="AzureSQL-169b" database="AzureSQL" >
+	<schema name="INSTANCE" catalogname="Crime_data_from_2020_to_Present" >
+		<table name="Dim_Crime_Dim_Victim" >
+			<column name="DR_NO" prior="VictimID" type="int" jt="4" />
+			<column name="DR_NO" prior="CrimeID" type="int" jt="4" />
+			<index name="pk" unique="UNIQUE_KEY" >
+				<column name="DR_NO" />
+				<column name="DR_NO" />
+			</index>
+			<fk name="fkt_Dim_Crime_Dim_Victim" to_schema="Crime_data_from_2020_to_Present.INSTANCE" to_table="Dim_Victim" >
+				<fk_column name="DR_NO" pk="DR_NO" />
+			</fk>
+			<fk name="fks_Dim_Crime_Dim_Victim" to_schema="Crime_data_from_2020_to_Present.INSTANCE" to_table="Facts_Crime" >
+				<fk_column name="DR_NO" pk="DR_NO" />
+			</fk>
+		</table>
+		<table name="Dim_Crime_Report" >
+			<column name="Date_Occured" type="date" jt="91" mandatory="y" />
+			<column name="Date_Reported" type="date" jt="91" />
+			<column name="Police_Station" type="date" jt="91" />
+			<column name="DR_NO" prior="CrimeID" type="int" jt="4" />
+			<index name="pk" unique="PRIMARY_KEY" >
+				<column name="Date_Occured" />
+			</index>
+			<index name="unq_CrimeID" unique="UNIQUE_INDEX" >
+				<column name="DR_NO" />
+			</index>
+		</table>
+		<table name="Dim_Location" >
+			<column name="Location" prior="Location_ID" type="int" jt="4" mandatory="y" />
+			<column name="Longitude" type="int" jt="4" />
+			<column name="Latitude" type="int" jt="4" />
+			<column name="AreaNames" type="varchar" length="100" jt="12" />
+			<index name="pk_Dim_Location" unique="PRIMARY_KEY" >
+				<column name="Location" />
+			</index>
+		</table>
+		<table name="Dim_Victim" >
+			<column name="DR_NO" prior="VictimID" type="int" jt="4" mandatory="y" />
+			<column name="VictimAge" type="int" jt="4" />
+			<column name="VictimDescent" type="varchar" jt="12" >
+				<comment><![CDATA[Descent Code: A - Other Asian, B - Black, C - Chinese, D - Cambodian , F - Filipino,  G - Guamanian,  H - Hispanic/Latin/Mexican,  I - American Indian/Alaskan Native , J - Japanese,  K - Korean,  L - Laotian , O - Other, P - Pacific Islander,  S - Samoan, U - Hawaiian, V - Vietnamese, W - White, X - Unknown, Z - Asian Indian.]]></comment>
+			</column>
+			<column name="VictimSex" type="varchar" jt="12" />
+			<index name="pk_VictimID" unique="PRIMARY_KEY" >
+				<column name="DR_NO" />
+			</index>
+			<index name="unq_VictimAge" unique="UNIQUE_INDEX" >
+				<column name="VictimAge" />
+			</index>
+		</table>
+		<table name="Dim_Weapon" prior="Weapon" >
+			<column name="Weapon Description" prior="WeaponType" type="varchar" length="100" jt="12" />
+			<column name="Weapon Used Code" type="int" jt="4" mandatory="y" />
+			<index name="pk_Dim_Weapon" unique="PRIMARY_KEY" >
+				<column name="Weapon Used Code" />
+			</index>
+			<fk name="fk_Dim_Weapon_Facts_Crime" to_schema="Crime_data_from_2020_to_Present.INSTANCE" to_table="Facts_Crime" >
+				<fk_column name="Weapon Used Code" pk="WeaponCode" />
+			</fk>
+		</table>
+		<table name="Facts_Crime" prior="Dim_Crime" >
+			<column name="DR_NO" prior="CrimeID" type="int" jt="4" mandatory="y" />
+			<column name="Time Occured" prior="Time" type="date" jt="91" />
+			<column name="Date Reported" prior="Date" type="date" jt="91" />
+			<column name="WeaponCode" type="varchar" jt="12" />
+			<column name="Date Occured" type="date" jt="91" />
+			<column name="Area Name" type="varchar" length="100" jt="12" />
+			<column name="Crime Code" type="varchar" length="100" jt="12" />
+			<column name="Crime Code Discription" type="varchar" length="100" jt="12" />
+			<column name="Victim Age" type="int" jt="4" />
+			<column name="Victim Sex" type="binary" length="2" jt="-2" />
+			<column name="Victim Descent" type="varchar" length="50" jt="12" />
+			<column name="Weapon Used Code" type="int" jt="4" />
+			<column name="Latitude" type="int" jt="4" />
+			<column name="Longitude" type="int" jt="4" />
+			<column name="Weapon Description" type="varchar" length="100" jt="12" />
+			<column name="Location" type="varchar" length="100" jt="12" />
+			<index name="pk_Cirme" unique="PRIMARY_KEY" >
+				<column name="DR_NO" />
+			</index>
+			<index name="unq_WeaponCode" unique="UNIQUE_INDEX" >
+				<column name="WeaponCode" />
+			</index>
+			<fk name="fk_Facts_Crime_Dim_Location" to_schema="Crime_data_from_2020_to_Present.INSTANCE" to_table="Dim_Location" >
+				<fk_column name="Location" pk="Location" />
+			</fk>
+			<fk name="fk_Facts_Crime_Dim_Crime_Report" to_schema="Crime_data_from_2020_to_Present.INSTANCE" to_table="Dim_Crime_Report" >
+				<fk_column name="Date Occured" pk="Date_Occured" />
+			</fk>
+			<fk name="fk_Facts_Crime_Dim_Victim" to_schema="Crime_data_from_2020_to_Present.INSTANCE" to_table="Dim_Victim" >
+				<fk_column name="DR_NO" pk="DR_NO" />
+			</fk>
+		</table>
+		<table name="Police" />
+	</schema>
+	<layout name="Default Layout" id="Layout-3b9" confirmed="y" show_relation="columns" >
+		<entity schema="Crime_data_from_2020_to_Present.INSTANCE" name="Dim_Crime_Report" color="C1D8EE" x="561" y="357" />
+		<entity schema="Crime_data_from_2020_to_Present.INSTANCE" name="Dim_Location" color="C1D8EE" x="527" y="51" />
+		<entity schema="Crime_data_from_2020_to_Present.INSTANCE" name="Dim_Victim" color="C1D8EE" x="119" y="119" />
+		<entity schema="Crime_data_from_2020_to_Present.INSTANCE" name="Dim_Weapon" color="C1D8EE" x="51" y="425" />
+		<entity schema="Crime_data_from_2020_to_Present.INSTANCE" name="Facts_Crime" color="C1D8EE" x="306" y="238" />
+	</layout>
+</project>
