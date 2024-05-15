@@ -8,3 +8,11 @@ Some location fields with missing data are noted as (0°, 0°).
 
 
 Data Dictionary provided by Data Source, explaining the columns 
+
+Transformation 
+Deleted Columns such as Premis and Premis Cd which are not relevant. 
+Unified the Date format for Date reported and Date Occured to YYYY-MM-DD.
+
+
+Data Warehouse
+Used Snowflake with integrated with Microsoft Azure to Load Data into Database. 
