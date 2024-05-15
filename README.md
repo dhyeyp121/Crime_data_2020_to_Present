@@ -16,3 +16,5 @@ Unified the Date format for Date reported and Date Occured to YYYY-MM-DD.
 
 Data Warehouse
 Used Snowflake with integrated with Microsoft Azure to Load Data into Database. 
+
+<img width="286" alt="image" src="https://github.com/dhyeyp121/Crime_data_2020_to_Present/assets/99106249/9e2dcbeb-5f1a-4a55-9775-e879e6018a90">
